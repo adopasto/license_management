@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>License Management System</h1>
+        <div id="login-form">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button id="loginButton">Login</button>
+        </div>
+        <div id="license-management" style="display: none;">
+            <div class="main-buttons">
+                <button id="addLicenseButton">Add License</button>
+                <button id="logoutButton">Logout</button>
+            </div>
+            <table id="license-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Created Date</th>
+                        <th>Expiry Date</th>
+                        <th>Attachment</th>
+                        <th>Comment</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
