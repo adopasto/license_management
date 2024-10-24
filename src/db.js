@@ -1,8 +1,15 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
 // Definujeme cestu k databázovému súboru
 const dbPath = path.resolve(__dirname, 'licenses.db');
+
+// Ak databáza existuje, zmažeme ju
+// if (fs.existsSync(dbPath)) {
+//     fs.unlinkSync(dbPath);
+//     console.log('Existing database file deleted');
+// }
 
 // Vytvoríme pripojenie k databáze
 const db = new sqlite3.Database(dbPath, (err) => {
@@ -70,14 +77,56 @@ const db = new sqlite3.Database(dbPath, (err) => {
             }
         });
 
+        // Vytvorenie tabuľky pre vymazané licencie
+        db.run(`
+            CREATE TABLE IF NOT EXISTS deleted_licenses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                original_id INTEGER,
+                name TEXT,
+                created_date TEXT,
+                expiry_date TEXT,
+                deleted_date TEXT,
+                deleted_by INTEGER,
+                comment TEXT,
+                attachment_path TEXT,
+                FOREIGN KEY (deleted_by) REFERENCES users (id)
+            )
+        `, (err) => {
+            if (err) {
+                console.error('Error creating deleted_licenses table:', err);
+            } else {
+                console.log('Deleted_licenses table ready');
+            }
+        });
+
+        // Vytvorenie indexov pre lepší výkon
+        db.run(`CREATE INDEX IF NOT EXISTS idx_license_logs_license_id ON license_logs(license_id)`, (err) => {
+            if (err) {
+                console.error('Error creating license_logs index:', err);
+            }
+        });
+
+        db.run(`CREATE INDEX IF NOT EXISTS idx_license_logs_user_id ON license_logs(user_id)`, (err) => {
+            if (err) {
+                console.error('Error creating user_logs index:', err);
+            }
+        });
+
         // Kontrola štruktúry databázy
-        db.all(`
-            SELECT name, sql FROM sqlite_master WHERE type='table'
-        `, [], (err, tables) => {
+        db.all(`SELECT name, sql FROM sqlite_master WHERE type='table'`, [], (err, tables) => {
             if (err) {
                 console.error('Error checking database structure:', err);
             } else {
                 console.log('Database structure:', tables);
+                
+                // Kontrola stĺpcov v tabuľke deleted_licenses
+                db.all(`PRAGMA table_info(deleted_licenses)`, [], (err, columns) => {
+                    if (err) {
+                        console.error('Error checking deleted_licenses columns:', err);
+                    } else {
+                        console.log('Deleted_licenses columns:', columns);
+                    }
+                });
             }
         });
     });
@@ -94,6 +143,16 @@ process.on('SIGINT', () => {
         process.exit(0);
     });
 });
+
+// Pridanie pomocných funkcií pre prácu s logmi
+db.addLog = function(licenseId, userId, action, changes, callback) {
+    const timestamp = new Date().toISOString();
+    this.run(
+        'INSERT INTO license_logs (license_id, user_id, action, timestamp, changes) VALUES (?, ?, ?, ?, ?)',
+        [licenseId, userId, action, timestamp, changes],
+        callback
+    );
+};
 
 // Export databázového objektu pre použitie v iných častiach aplikácie
 module.exports = db;

@@ -9,6 +9,7 @@
 <body>
     <div id="app">
         <h1>License Management System</h1>
+        <img src="/src/logo_radington.png" alt="Company Logo" class="header-logo">
         <div id="login-form">
             <input type="text" id="username" placeholder="Username">
             <input type="password" id="password" placeholder="Password">
@@ -17,22 +18,49 @@
         <div id="license-management" style="display: none;">
             <div class="main-buttons">
                 <button id="addLicenseButton">Add License</button>
+                <button id="showDeletedButton">Show Deleted Licenses</button>
                 <button id="logoutButton">Logout</button>
             </div>
-            <table id="license-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Created Date</th>
-                        <th>Expiry Date</th>
-                        <th>Attachment</th>
-                        <th>Comment</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            
+            <!-- Hlavná tabuľka licencií -->
+            <div class="licenses-section">
+                <h2>Active Licenses</h2>
+                <table id="license-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th>Expiry Date</th>
+                            <th>Attachment</th>
+                            <th>Comment</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Sekcia vymazaných licencií -->
+            <div id="deleted-licenses" style="display: none;">
+                <h2>Vymazané licencie</h2>
+                <table id="deleted-license-table">
+                    <thead>
+                        <tr>
+                            <th>Original ID</th>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th>Expiry Date</th>
+                            <th>Deleted Date</th>
+                            <th>Deleted By</th>
+                            <th>Comment</th>
+                            <th>Attachment</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button id="hideDeletedButton">Skryť vymazané licencie</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

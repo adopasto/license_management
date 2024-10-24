@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 const dbPath = path.resolve(__dirname, 'src', 'licenses.db');
+console.log('Database path:', dbPath);
+
 const db = new sqlite3.Database(dbPath);
 
 const saltRounds = 10;

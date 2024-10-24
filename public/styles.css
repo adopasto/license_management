@@ -23,6 +23,11 @@ h1 {
     padding-bottom: 10px;
     border-bottom: 2px solid #eee;
 }
+.header-logo {
+    height: 50px; /* upravte podľa veľkosti vášho loga */
+    width: auto;
+    object-fit: contain;
+}
 
 /* Tabuľka */
 table {
@@ -312,5 +317,253 @@ a:hover {
 
     .add-license-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+
+/* Vymazané licencie */
+#deleted-licenses {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+#deleted-licenses h2 {
+    color: #e74c3c;
+}
+
+#deleted-license-table th {
+    background-color: #e74c3c;
+}
+
+/*responzivita*/
+@media screen and (max-width: 1024px) {
+    body {
+        padding: 15px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: normal;
+    }
+
+    .add-license-form {
+        width: 90%;
+        margin: 10px;
+    }
+
+    .add-license-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #app {
+        padding: 15px;
+    }
+
+    th, td {
+        min-width: 120px;
+        font-size: 14px;
+    }
+
+    td:nth-child(6) { /* Comment column */
+        min-width: 150px;
+    }
+
+    .add-license-form {
+        padding: 15px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .add-license-form {
+        padding: 10px;
+    }
+
+    button {
+        margin: 2px;
+    }
+}
+
+/* Overlay a formulár */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    backdrop-filter: blur(3px);
+}
+
+.add-license-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+}
+
+/* Nadpis */
+.add-license-form h2 {
+    margin: 0 0 25px 0;
+    padding-bottom: 15px;
+    color: #2c3e50;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: 1.5rem;
+}
+
+/* Vstupné polia */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    height: 42px;
+}
+
+.form-group textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+
+/* Súborový input */
+.file-input-container {
+    margin-top: 8px;
+}
+
+.file-select-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #2c3e50;
+    font-size: 14px;
+}
+
+.file-select-button:hover {
+    background: #e9ecef;
+    border-color: #dee2e6;
+}
+
+.file-input-container input[type="file"] {
+    display: none;
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Tlačidlá */
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.submit-button,
+.cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-button {
+    background: #2ecc71;
+    color: white;
+}
+
+.submit-button:hover {
+    background: #27ae60;
+    transform: translateY(-1px);
+}
+
+.cancel-button {
+    background: #e74c3c;
+    color: white;
+}
+
+.cancel-button:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* Responzívne úpravy */
+@media (max-width: 768px) {
+    .add-license-form {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .submit-button,
+    .cancel-button {
+        width: 100%;
     }
 }
